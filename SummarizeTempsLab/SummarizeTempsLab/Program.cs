@@ -7,13 +7,13 @@ namespace SummarizeTempsLab
     {
         static void Main(string[] args)
         {
-            double delay = 2000;
-            string file;
+            string file = "";
             int threshold;
             string input;
             double average;
             int avgdenominator;
             bool choice = true;
+            bool choice2 = true;
 
             Console.WriteLine("***Summarize Temperatures***");
             while (choice)
@@ -22,9 +22,13 @@ namespace SummarizeTempsLab
                 int below = 0;
                 double sum = 0;
 
-                Console.WriteLine("\nWhat file would you like to read?");
-                file = Console.ReadLine();
-
+                while (choice2)
+                {
+                    Console.WriteLine("\nWhat file would you like to read?");
+                    file = Console.ReadLine();
+                    choice2 = false;
+                }
+ 
                 if (File.Exists(file))
                 {
                     Console.WriteLine("\nWhat is your temperature threshold?");
@@ -56,26 +60,37 @@ namespace SummarizeTempsLab
                     Console.WriteLine("\nThere are " + above + " temperatures above " + threshold + ".");
                     Console.WriteLine("\nThere are " + below + " temperatures below " + threshold + ".");
                     Console.WriteLine("\nThe average temperature is " + average + ".");
-                    TimeSpan.FromSeconds(delay);
-                    Console.WriteLine("\nWould you like to choose another file? Type yes or no.");
+                    Console.WriteLine("\nWould you like to continue summarizing temperatures? Type yes or no.");
 
                     if (Console.ReadLine() == "yes")
                     {
-                        choice = true;
+                        Console.WriteLine("\nWould you like to continue using the file " + file + "? Type yes or no.");
+                        if (Console.ReadLine() == "yes")
+                        {
+                            choice = true;
+                            choice2 = false;
+                        }
+                        else
+                        {
+                            choice = true;
+                            choice2 = true;
+                        }
                     }
                     else
                     {
                         choice = false;
                     }
+
                 }
                 else
                 {
                     Console.WriteLine("\nThis File does not exist.");
-                    Console.WriteLine("\nWould you like to choose a different file? Type yes or no.");
+                    Console.WriteLine("\nWould you like to choose another file? Type yes or no.");
 
                     if (Console.ReadLine() == "yes")
                     {
                         choice = true;
+                        choice2 = true;
                     }
                     else
                     {
@@ -83,7 +98,7 @@ namespace SummarizeTempsLab
                     }
                 }
             }
-            Console.WriteLine("This program has ended.");
+            Console.WriteLine("\nThis program has ended.");
         }
     }
 }
